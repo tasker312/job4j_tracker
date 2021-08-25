@@ -1,16 +1,17 @@
 package ru.job4j.tracker;
 
-public class StubInput implements Input {
-    private String[] answers;
-    private int position = 0;
+import java.util.Queue;
 
-    public StubInput(String[] answers) {
+public class StubInput implements Input {
+    private Queue<String> answers;
+
+    public StubInput(Queue<String> answers) {
         this.answers = answers;
     }
 
     @Override
     public String askStr(String question) {
-        return answers[position++];
+        return answers.poll();
     }
 
     @Override
