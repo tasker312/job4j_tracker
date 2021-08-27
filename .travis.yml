@@ -18,3 +18,9 @@ notifications:
       - ivan255255@mail.ru
     on_success: never # default: change
     on_failure: always # default: always
+
+env:
+
+  global:
+
+    - CODECOV_TOKEN="3baf0b35-ca6f-4ba3-8ece-55eac1f00046"
