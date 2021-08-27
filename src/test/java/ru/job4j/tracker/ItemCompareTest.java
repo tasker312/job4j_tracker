@@ -16,7 +16,7 @@ public class ItemCompareTest {
         Item item2 = new Item(10, "Item2");
         Item item3 = new Item(2, "Item3");
         List<Item> items = Arrays.asList(item1, item2, item3);
-        Collections.sort(items, new SortByIdItem());
+        Collections.sort(items, new SortByIdIncreaseItem());
         assertThat(items, is(Arrays.asList(item3, item1, item2)));
     }
 
@@ -26,7 +26,7 @@ public class ItemCompareTest {
         Item item2 = new Item(10, "Item2");
         Item item3 = new Item(2, "Item3");
         List<Item> items = Arrays.asList(item1, item2, item3);
-        Collections.sort(items, new SortByIdItem().reversed());
+        Collections.sort(items, new SortByIdDecreaseItem());
         assertThat(items, is(Arrays.asList(item2, item1, item3)));
     }
 
