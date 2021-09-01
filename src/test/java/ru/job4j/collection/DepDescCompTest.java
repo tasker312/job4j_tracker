@@ -41,7 +41,7 @@ public class DepDescCompTest {
                 )
         );
         List<String> exp = new ArrayList<>(
-                Arrays.asList(
+                List.of(
                         "K2",
                         "K2/SK2",
                         "K1",
