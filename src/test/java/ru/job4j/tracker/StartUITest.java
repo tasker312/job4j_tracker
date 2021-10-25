@@ -17,7 +17,7 @@ public class StartUITest {
                 new LinkedList<>(List.of("0", "Item name", "1"))
         );
         Output out = new StubOutput();
-        Tracker tracker = new Tracker();
+        Store tracker = new MemTracker();
         List<UserAction> actions = List.of(
                 new CreateAction(out),
                 new ExitAction()
@@ -28,7 +28,7 @@ public class StartUITest {
 
     @Test
     public void whenReplaceItem() {
-        Tracker tracker = new Tracker();
+        Store tracker = new MemTracker();
         Item item = tracker.add(new Item("Replaced item"));
         String replacedName = "New item name";
         Input in = new StubInput(
@@ -45,7 +45,7 @@ public class StartUITest {
 
     @Test
     public void whenDeleteItem() {
-        Tracker tracker = new Tracker();
+        Store tracker = new MemTracker();
         Item item = tracker.add(new Item("Deleted item"));
         Input in = new StubInput(
                 new LinkedList<>(List.of("0", String.valueOf(item.getId()), "1"))
@@ -65,7 +65,7 @@ public class StartUITest {
         Input in = new StubInput(
                 new LinkedList<>(List.of("0"))
         );
-        Tracker tracker = new Tracker();
+        Store tracker = new MemTracker();
         List<UserAction> actions = List.of(
                 new ExitAction()
         );
@@ -82,7 +82,7 @@ public class StartUITest {
         Input in = new StubInput(
                 new LinkedList<>(List.of("0", "1"))
         );
-        Tracker tracker = new Tracker();
+        Store tracker = new MemTracker();
         Item item = new Item("Test");
         tracker.add(item);
         List<UserAction> actions = List.of(
@@ -108,7 +108,7 @@ public class StartUITest {
         Input in = new StubInput(
                 new LinkedList<>(List.of("0", "Test", "1"))
         );
-        Tracker tracker = new Tracker();
+        Store tracker = new MemTracker();
         Item item1 = new Item("Test");
         Item item2 = new Item("Test");
         tracker.add(item1);
@@ -134,7 +134,7 @@ public class StartUITest {
     @Test
     public void whenFindById() {
         Output out = new StubOutput();
-        Tracker tracker = new Tracker();
+        Store tracker = new MemTracker();
         Item item = new Item("Test");
         tracker.add(item);
         Input in = new StubInput(
@@ -163,7 +163,7 @@ public class StartUITest {
         Input in = new StubInput(
                 new LinkedList<>(List.of("3", "0"))
         );
-        Tracker tracker = new Tracker();
+        Store tracker = new MemTracker();
         List<UserAction> actions = List.of(
                 new ExitAction()
         );
