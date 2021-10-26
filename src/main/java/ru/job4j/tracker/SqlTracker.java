@@ -5,7 +5,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import java.util.stream.Stream;
 
 public class SqlTracker implements Store {
 
@@ -45,7 +44,7 @@ public class SqlTracker implements Store {
     public Item add(Item item) {
         try (PreparedStatement statement = connection.prepareStatement(
                 "insert into items (name, created) values (?, ?)",
-                        Statement.RETURN_GENERATED_KEYS)) {
+                Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, item.getName());
             statement.setTimestamp(2, Timestamp.valueOf(item.getCreated()));
             statement.execute();
@@ -92,7 +91,7 @@ public class SqlTracker implements Store {
         try (PreparedStatement statement = connection.prepareStatement(
                 "select * from items")) {
             try (ResultSet resultSet = statement.executeQuery()) {
-                itemsByResultSet(resultSet).forEach(items::add);
+                items = itemsByResultSet(resultSet);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -107,7 +106,7 @@ public class SqlTracker implements Store {
                 "select * from items where name = ?")) {
             statement.setString(1, key);
             try (ResultSet resultSet = statement.executeQuery()) {
-                itemsByResultSet(resultSet).forEach(items::add);
+                items = itemsByResultSet(resultSet);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -121,7 +120,8 @@ public class SqlTracker implements Store {
                 "select * from items where id = ?")) {
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
-                return itemsByResultSet(resultSet).findFirst().orElse(null);
+                List<Item> items = itemsByResultSet(resultSet);
+                return items.size() > 0 ? items.get(0) : null;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -129,7 +129,7 @@ public class SqlTracker implements Store {
         return null;
     }
 
-    private Stream<Item> itemsByResultSet(ResultSet resultSet) throws SQLException {
+    private List<Item> itemsByResultSet(ResultSet resultSet) throws SQLException {
         List<Item> items = new ArrayList<>();
         while (resultSet.next()) {
             Item item = new Item();
@@ -138,6 +138,6 @@ public class SqlTracker implements Store {
             item.setCreated(resultSet.getTimestamp(3).toLocalDateTime());
             items.add(item);
         }
-        return items.stream();
+        return items;
     }
 }
